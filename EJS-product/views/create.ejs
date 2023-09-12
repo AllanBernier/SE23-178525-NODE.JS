@@ -1,0 +1,22 @@
+<%- include("_header") %>
+
+<body>
+    CREATE PAGE
+
+
+    <form action="/product/store" method="post">
+        <label for="name">Name</label>
+        <input type="text" name="name">
+
+        <label for="description">Description</label>
+        <input type="text" name="description">
+
+        <label for="price">Price</label>
+        <input type="number" name="price">
+
+        <input type="submit" value="Valider">
+    </form>
+</body>
+
+
+<%- include("_footer") %>

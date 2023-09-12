@@ -1,13 +1,38 @@
 
 <%- include("_header") %>
 <body>
-    <% products.forEach(product => { %>
-      
-        <h3><%=product.name %></h3>
-        <p><%=product.description %></p>
-        <p><%=product.price %></p>
-        
-    <%});%>
+
+    <div class="table-responsive-sm">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% products.forEach(product => { %>
+                <tr>
+                    <td><%=product._id %></td>
+                    <td><%=product.name %></td>
+                    <td><%=product.description %></td>
+                    <td><%=product.price %></td>
+                    <td>
+                        <a class="btn btn-warning"  href="/product/<%=product._id %>/edit">Update</a>
+                        <a class="btn btn-danger" href="/product/<%=product._id %>/delete">Delete</a>
+                    </td>
+                </tr>
+                <%})%>
+            </tbody>
+        </table>
+
+    </div>
+
+
 
 
 </body>

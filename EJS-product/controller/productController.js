@@ -1,6 +1,6 @@
 const Product = require("../model/Product");
 
-const indexP = (req, res) => {
+const index = (req, res) => {
 
     
     Product.find()
@@ -11,7 +11,18 @@ const indexP = (req, res) => {
     .catch( (err) => res.render("index", {message : "Query failed"}));
 }
 
-const showP = (req, res) => {
+const create = (req, res) => {
+    res.render("create")
+}
+
+const edit = (req, res) => {
+    Product.findById(req.params.id)
+    .then( (result) => {
+        res.render("edit", {product : result})
+    })
+}
+
+const show = (req, res) => {
     Product.findById(req.params.id)
     .then( (result) => {
         console.log(result)
@@ -19,26 +30,30 @@ const showP = (req, res) => {
     .catch( (err) => res.status(403).json({message : `Product not found ${err}`}));
 }
 
-const storeP = (req, res) => {
+const store = (req, res) => {
+    
     Product.create(req.body)
-    .then( (result) => res.status(201).json(result))
-    .catch( (err) => res.status(403).json({message : `Product not created ${err}`}));
+    .then( () => res.redirect("/product"))
+    .catch( () => res.redirect("/product"));
 }
-const updateP = (req, res) => {
+const update = (req, res) => {
     Product.updateOne({_id : req.params.id}, req.body)
     .then( (result) => res.json(result))
     .catch( (err) => res.status(403).json({message : "Product not Updated"}));
 }
-const destroyP = (req, res) => {
+const destroy = (req, res) => {
     Product.deleteOne({_id : req.params.id})
-    .then( (result) => res.json(result))
-    .catch( (err) => res.status(403).json({message : "Product not not found"}));
+    .then( (result) => res.redirect("/product"))
+    .catch( (err) => res.redirect("/product"));
 }
 
 module.exports = {
-    indexP,
-    showP,
-    updateP,
-    storeP,
-    destroyP,
+    index,
+    show,
+    update,
+    store,
+    destroy,
+    create,
+    edit,
+
 }

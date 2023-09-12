@@ -1,3 +1,5 @@
 */.env
 .env
 /nodes_modules
+EJS-product/.env
+CRUD-product/.env

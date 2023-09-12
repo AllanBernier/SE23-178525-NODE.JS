@@ -22,10 +22,13 @@ app.set("view engine", "ejs");
 app.set("views", path.join( __dirname,"views") );
 
 app.get("/", (req, res) => {
-    res.render("index")
+    const data = {
+        name : ["Tata", "Toto", "Titi", "Tutu"]
+    }
+    res.render("helloworld", data )
 })
 
 
-//app.use(product_router)
+app.use(product_router)
 
 

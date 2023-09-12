@@ -1,56 +1,31 @@
-let product_list = [
-    {id : 1, name: "Product 1", description : "Description product 1", price : 12},
-    {id : 2, name: "Product 2", description : "Description product 2", price : 19},
-    {id : 3, name: "Product 3", description : "Description product 3", price : 5},
-];
-let max_id = 3
+const Product = require("../model/Product");
 
 const indexP = (req, res) => {
-    res.json(product_list)
+    Product.find()
+    .then( (result) => res.json(result))
+    .catch( (err) => res.status(503).json({message : "Query failed"}));
 }
 
 const showP = (req, res) => {
-    const id = Number(req.params.id)
-    res.json(product_list.find(product => product.id === id))
+    Product.findById(req.params.id)
+    .then( (result) => res.json(result))
+    .catch( (err) => res.status(403).json({message : `Product not found ${err}`}));
 }
 
 const storeP = (req, res) => {
-    const product_data = req.body
-
-    max_id++;
-    const product = {
-        id : max_id,
-        name : product_data.name,
-        description : product_data.description,
-        price : product_data.price,
-    }
-    product_list.push(product)
-
-    res.json(product)  
+    Product.create(req.body)
+    .then( (result) => res.status(201).json(result))
+    .catch( (err) => res.status(403).json({message : `Product not created ${err}`}));
 }
 const updateP = (req, res) => {
-    const id = Number(req.params.id);
-    const index = product_list.findIndex(product => product.id === id)
-
-    const product = {
-        id : id,
-        name : req.body.name,
-        description : req.body.description,
-        price : req.body.price,
-    }
-
-    product_list[index] = product
-
-    res.send("Product updated")
+    Product.updateOne({_id : req.params.id}, req.body)
+    .then( (result) => res.json(result))
+    .catch( (err) => res.status(403).json({message : "Product not Updated"}));
 }
 const destroyP = (req, res) => {
-    const id = Number(req.params.id);
-    const index = product_list.findIndex(product => product.id === id)
-
-    const product = product_list[index];
-    product_list.splice(index, 1);
-
-    res.json(product);
+    Product.deleteOne({_id : req.params.id})
+    .then( (result) => res.json(result))
+    .catch( (err) => res.status(403).json({message : "Product not not found"}));
 }
 
 module.exports = {

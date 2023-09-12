@@ -15,10 +15,10 @@ const {
 router.use("/product*", logger)
 
 router.get("/product/", indexP);
-router.get("/product/:id",hasId, showP);
+router.get("/product/:id", showP);
 router.post("/product/create",storeP);
-router.put("/product/:id/edit",hasId, updateP);
-router.delete("/product/:id/delete",hasId, destroyP);
+router.put("/product/:id/edit", updateP);
+router.delete("/product/:id/delete", destroyP);
 
 
 

@@ -17,8 +17,14 @@ mongoose.connect(process.env.MONGO_URI)
     console.log("Connection to db failed")
 })
 
+
+app.get('/',(req, res) => {
+    res.status(200).json({message : 'result'})
+})
+
 app.use(cors())
 app.use(express.json())
 app.use(product_router)
 
 
+module.exports = app

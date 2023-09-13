@@ -1,11 +1,22 @@
 <template>
-  <router-link to="/">Welcome</router-link>
-  <router-link to="/home">Home</router-link>
+
+  <my-router-link :to="{name: 'Welcome'}" color="btn-primary">
+      Welcome
+  </my-router-link>
+
+  <my-router-link :to="{name: 'HomePage'}" color="btn-primary">
+      Home
+  </my-router-link>
+
+  <my-router-link :to="{name: 'CreateProduct'}" color="btn-primary">
+      Create Product
+  </my-router-link>
 
   <router-view/>
 </template>
 
-<script>
+<script setup>
+import MyRouterLink from './components/MyRouterLink.vue';
 
 </script>
 

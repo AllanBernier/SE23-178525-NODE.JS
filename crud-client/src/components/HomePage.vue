@@ -2,39 +2,33 @@
     <div>
         <h1>This is home page</h1>
     </div>
+    <div class="pt-5 d-flex justify-content-center">
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr v-for="product in products" :key="product.id">
-                <td>{{ product._id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
-                <th>
-                    <router-link to="#">Update</router-link>
-                    <button @click.prevent="deleteProduct(product._id)">Delete</button>
-                </th>
-            </tr>
-        </tbody>
-    </table>
+            <tbody>
+                <product-line v-for="product in products" :product="product" :key="product._id" @delete="deleteProduct"/>
+            </tbody>
+        </table>
+    </div>
 </template>
 
-
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, defineEmits} from 'vue'
 import axios from 'axios'
+import ProductLine from './ProductLine.vue';
 
-    
+
+defineEmits(["delete"])
+
 const products = ref({})
 
 const getAllProduct = () => {
@@ -43,10 +37,8 @@ const getAllProduct = () => {
 }
 
 const deleteProduct = (id) => {
-
-    products.value = products.value.filter(product => product._id)
     axios.delete(`http://localhost:3000/product/${id}/delete`)
-    .then( result => products.value = result.data )
+    .then( () => products.value = products.value.filter(product => product._id !== id) )
 }
 
 
